@@ -3,15 +3,18 @@ module Mirror
     attr_reader :provider, :masters, :apps
 
     def initialize(config_file)
-      @config_file = config_file
+      @config_file = config_file || 'config.yml'
     end
 
     # Starts the server
     def start
       check_if_running!
 
-      config = YAML.load_file(config_file).symbolize_keys
-      @provider = Provider.new(config_file[:provider])
+      config = YAML.load_file(@config_file).symbolize_keys
+      @provider = Provider.new(config[:provider])
+
+      # Starts the REST server
+      API.start!
     end
 
     # Stops the server

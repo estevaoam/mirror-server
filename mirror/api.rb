@@ -1,7 +1,7 @@
 require 'sinatra'
 
 module Mirror
-  class API
+  class API < Sinatra::Base
     post '/app' do
       appname = params[:name]
 
@@ -15,6 +15,10 @@ module Mirror
 
     get '/apps' do
       # list all apps
+    end
+
+    def start!
+      run!
     end
   end
 end

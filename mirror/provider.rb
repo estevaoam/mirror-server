@@ -3,7 +3,7 @@ module Mirror
     attr_reader :service, :credentials, :client
 
     def initialize(config)
-      @service = config[:service]
+      @provider = config[:provider]
       @credentials = config[:credentials]
     end
   end
