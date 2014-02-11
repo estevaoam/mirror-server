@@ -1,6 +1,8 @@
 require 'sinatra'
 
 module Mirror
+  GITPATH = "/home/git"
+
   class API < Sinatra::Base
     post '/app' do
       appname = params[:name]
