@@ -1,6 +1,6 @@
 # mirror-server
 
-**WORKING IN PROGRESS :D**
+**WORK IN PROGRESS :D**
 
 The server application for Mirror.
 It creates/destroys apps and manages allocation of resources
