@@ -3,10 +3,9 @@
 **WORK IN PROGRESS :D**
 
 The server application for Mirror.
-It creates/destroys apps and manages allocation of resources
-from providers, like AWS, DigitalOcean and so on.
 
-It comes with a binary called `mirror-server`.
+It bootstraps your server, create/destroys apps, manages allocation of resources
+from providers, like AWS, DigitalOcean, get statistic usage of your clusters.
 
 You can start it by running:
 
@@ -18,11 +17,10 @@ Wants to see whats going on?
 
     mirror-server watch
 
-It will attach the output to everything it's doing, contacting masters,
-deploying apps, receiving git hooks and so on.
+It will attach the output to everything it's doing (contacting masters,
+deploying apps, receiving git hooks and so on)
 
-TODO:
-=====
+## TODO:
 
 * Bootstraping the server (create folders, users, etc)
 * Creating app (create app folder, repository, add users, etc)
