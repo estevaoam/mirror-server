@@ -1,19 +1,18 @@
 module Mirror
-  class Server
-    attr_reader :provider, :masters, :apps
+  ROOT_PATH = "/home/mirror"
 
-    def initialize(config_file)
+  class Server
+    attr_reader :provider, :masters, :apps, :config
+
+    def initialize(config_file = nil)
       @config_file = config_file || 'config.yml'
     end
 
-    # Starts the server
+    # Starts the REST server
     def start
       check_if_running!
 
-      config = YAML.load_file(@config_file).symbolize_keys
       @provider = Provider.new(config[:provider])
-
-      # Starts the REST server
       API.start!
     end
 
@@ -22,7 +21,7 @@ module Mirror
     end
 
     def config
-      YAML.load_file(@config_file).symbolize_keys
+      @config ||= YAML.load_file(@config_file).symbolize_keys
     end
 
     private

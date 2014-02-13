@@ -6,7 +6,7 @@ module Mirror
       @name = name
     end
 
-    def create
+    def create!
       # Creates repository
       Repository.new(self).create_if_needed!
     end

@@ -4,15 +4,13 @@ module Mirror
   GITPATH = "/home/git"
 
   class API < Sinatra::Base
+    set :port, 9494
+
     post '/app' do
-      appname = params[:name]
+      name = params[:name]
 
-      # check if it's a valid name
-      # and it's not used
-
-      # create an user and repository for the app
-
-      # return data of the created repo
+      app = App.new(name)
+      app.create!
     end
 
     get '/apps' do

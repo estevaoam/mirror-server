@@ -1,1 +1,32 @@
-#! ruby
+#!/usr/bin/env ruby
+require "rubygems"
+require "thor"
+require_relative "../mirror"
+
+class MirrorCLI < Thor
+
+  # Creates the default structure for mirror
+  # * The git user and the default directory
+  #
+  # Many steps are inspired/copied from progrium/gitreceive,
+  # which is AWESOME: https://github.com/progrium/gitreceive
+  desc "install", "Bootstrap the server, creates git user and home, etc"
+  def install
+    print  "Adding `mirror` user: "
+    system "sudo useradd -d #{Mirror::ROOT_PATH} mirror || true"
+    print  "added\n"
+
+    print  "Creating folder structure for `mirror`: "
+    system "sudo mkdir -p #{Mirror::ROOT_PATH}/.ssh"
+    system "sudo touch #{Mirror::ROOT_PATH}/.ssh/authorized_keys"
+    print  "created"
+  end
+
+  desc "start", "Starts the server"
+  def start
+    server = Mirror::Server.new
+    server.start
+  end
+end
+
+MirrorCLI.start

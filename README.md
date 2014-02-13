@@ -20,3 +20,11 @@ Wants to see whats going on?
 
 It will attach the output to everything it's doing, contacting masters,
 deploying apps, receiving git hooks and so on.
+
+TODO:
+=====
+
+* Bootstraping the server (create folders, users, etc)
+* Creating app (create app folder, repository, add users, etc)
+* Deploying app (build docker images, storing, yell deploy message for masters)
+* Transform to gem (remove `require_relative` statements)

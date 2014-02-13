@@ -1,20 +1,21 @@
 module Mirror
   class Repository
-    attr_accessor :app, :path
+    attr_reader :app, :path
 
     def initialize(app)
       @app = app
-      @path = "#{Mirror::GITPATH}/#{app.name}"
+      @path = "#{Mirror::ROOT_PATH}/#{app.name}"
     end
 
-    def create_if_needed!
-      %x(
-        mkdir #{self.path} /dev/null
-        git init > /dev/null
-      )
-
+    def create!
       unless system("test -d #{self.path}")
-        raise "Something happened and I couldn't create your app repo, chegk permissions."
+        unless system("mkdir #{self.path}")
+          raise "I couldn't create your app repo, check folder permissions."
+        end
+
+        system("cd #{self.path} && git init")
+      else
+        raise "Path '#{self.path}' already exists, skipping."
       end
     end
   end
