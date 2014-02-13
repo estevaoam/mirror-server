@@ -3,7 +3,7 @@ require "rubygems"
 require "thor"
 require_relative "../mirror"
 
-class MirrorCLI < Thor
+class Mirror::CLI < Thor
 
   # Creates the default structure for mirror
   # * The git user and the default directory
@@ -29,4 +29,4 @@ class MirrorCLI < Thor
   end
 end
 
-MirrorCLI.start
+Mirror::CLI.start
