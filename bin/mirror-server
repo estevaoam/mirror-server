@@ -12,20 +12,45 @@ class Mirror::CLI < Thor
   # which is AWESOME: https://github.com/progrium/gitreceive
   desc "install", "Bootstrap the server, creates git user and home, etc"
   def install
-    print  "Adding `mirror` user: "
-    system "sudo useradd -d #{Mirror::ROOT_PATH} mirror || true"
-    print  "added\n"
-
-    print  "Creating folder structure for `mirror`: "
-    system "sudo mkdir -p #{Mirror::ROOT_PATH}/.ssh"
-    system "sudo touch #{Mirror::ROOT_PATH}/.ssh/authorized_keys"
-    print  "created"
+    add_user
+    create_root_folder
+    fix_permissions
   end
 
   desc "start", "Starts the server"
   def start
     server = Mirror::Server.new
     server.start
+  end
+
+  private
+
+  def add_user
+    print  "Adding `mirror` user: "
+    unless system('id -u mirror > /dev/null')
+      system "sudo useradd -d #{Mirror::ROOT_PATH} mirror || true"
+      print  "done\n"
+    else
+      print "skipped\n"
+    end
+  end
+
+  def create_root_folder
+    print  "Creating folder structure for `mirror`: "
+    unless system("test -d #{Mirror::ROOT_PATH}")
+      system "sudo mkdir -p #{Mirror::ROOT_PATH}/.ssh"
+      system "sudo mkdir -p #{Mirror::ROOT_PATH}/apps"
+      system "sudo touch #{Mirror::ROOT_PATH}/.ssh/authorized_keys"
+      print  "done\n"
+    else
+      print "skipped\n"
+    end
+  end
+
+  def fix_permissions
+    print "Fixing permisions: "
+    system "sudo chown -R mirror:mirror #{Mirror::ROOT_PATH}"
+    print "done\n"
   end
 end
 
